@@ -1,6 +1,6 @@
 import { type Page } from "@playwright/test";
 export class BasePage {
-  // Variables
+  // Variables.
   private readonly page: Page;
   public url: string = "https://www.saucedemo.com/";
 
@@ -8,7 +8,7 @@ export class BasePage {
   constructor(page: Page) {
     this.page = page;
   }
-  // access page fixtures
+
   get accessPage() {
     return this.page;
   }

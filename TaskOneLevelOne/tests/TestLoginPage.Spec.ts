@@ -11,10 +11,10 @@ test("Check that USer logged in successfully ", async ({ page }) => {
 
   const expectedUrl: string = "https://www.saucedemo.com/inventory.html";
   const testLogin = new LoginPage(page, username, password);
-  //open uRL
+
   await testLogin.open();
-  //login
   await testLogin.login();
+
   await expect(page).toHaveURL(expectedUrl);
   await expect(testLogin.logoLocator).toContainText("Swag Labs");
 });
