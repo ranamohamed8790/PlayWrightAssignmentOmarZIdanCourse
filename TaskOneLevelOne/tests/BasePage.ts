@@ -8,7 +8,7 @@ export class BasePage {
   constructor(page: Page) {
     this.page = page;
   }
-
+  // access page fixtures
   get accessPage() {
     return this.page;
   }
