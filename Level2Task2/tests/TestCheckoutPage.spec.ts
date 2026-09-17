@@ -72,10 +72,6 @@ test("check checout and some button", async ({ context, page }) => {
     "https://rahulshettyacademy.com/qa-career-accelerator-job-ready",
   );
 
-  // check the signup button is displayed
-  // await expect(
-  //   openNewtab.getByRole("link", { name: "Sign Up" }),
-  // ).toBeVisible();
   //close new tab
   await openNewtab.close();
   // ensure the 1st tab still open
