@@ -6,7 +6,9 @@ test.use({
   launchOptions: { slowMo: 1200 },
 });
 
-test("Check HomeTab and ShopTab", async ({ page }) => {
+test("Locate Element in Home Page and add product to cart from shop tab", async ({
+  page,
+}) => {
   const homePageObject = new HomePage(page);
   const shopPageObject = new ShopPage(page, "cardName");
   //Open Home Page
@@ -14,7 +16,7 @@ test("Check HomeTab and ShopTab", async ({ page }) => {
   //Click on sumbit Button
   await homePageObject.clickOnSubmitButton();
   // Click on shopTab
-  await shopPageObject.clickOnShopTab();
+  await shopPageObject.openShopPage();
   // select 1st card
 
   await shopPageObject.filterCardAndClickOnAddButton("iphone X");

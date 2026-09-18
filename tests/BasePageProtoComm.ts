@@ -3,6 +3,8 @@ import { type Page } from "@playwright/test";
 export class BasePageProtoComm {
   private readonly page;
   public urlHome: string = "https://rahulshettyacademy.com/angularpractice/";
+  public urlShop: string =
+    "https://rahulshettyacademy.com/angularpractice/shop";
 
   constructor(page: Page) {
     this.page = page;
@@ -15,5 +17,9 @@ export class BasePageProtoComm {
   // Open Home Page
   async openHomePage(): Promise<void> {
     await this.page.goto(this.urlHome);
+  }
+  // Open h Page
+  async openShopPage(): Promise<void> {
+    await this.page.goto(this.urlShop);
   }
 }
