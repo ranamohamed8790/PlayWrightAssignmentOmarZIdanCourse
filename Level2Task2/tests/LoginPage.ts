@@ -1,11 +1,25 @@
-import { type Page } from "@playwright/test";
-import { UtilityTool } from "./UtilityTool";
+import { type Page, type Locator } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class LoginPage extends UtilityTool {
+export class LoginPage extends BasePage {
   // Constructor
   constructor(page: Page) {
     super(page);
   }
+
+  //Locator of Login Page
+
+  protected readonly userEmail: Locator =
+    this.accessPage.getByPlaceholder("email@example.com");
+
+  protected readonly passwordLogin: Locator = this.accessPage.getByPlaceholder(
+    "enter your passsword",
+  );
+
+  protected readonly loginButton: Locator = this.accessPage.getByRole(
+    "button",
+    { name: "Login" },
+  );
 
   //Methods
   async acessLoginPage(): Promise<LoginPage> {
@@ -23,18 +37,12 @@ export class LoginPage extends UtilityTool {
     return this;
   }
 
-  async fillUsernameAndPassword(
-    email: string,
-    password: string,
-  ): Promise<LoginPage> {
+  async logintoHomePage(email: string, password: string): Promise<LoginPage> {
     await (
       await this.enterEmailAtLoginPage(email)
     ).enterPasswordatLogin(password);
-    return this;
-  }
-
-  async clickOnLoginButton(): Promise<LoginPage> {
     await this.loginButton.click();
+
     return this;
   }
 }

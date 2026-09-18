@@ -11,6 +11,7 @@ test.use({
 
 test("check checout and some button", async ({ context, page }) => {
   const uniqueEmail: string = `rana${Date.now()}@test.com`;
+  const password: string = "Pass@1234";
   const expectedHomeURL =
     "https://rahulshettyacademy.com/client/#/dashboard/dash";
   const expectedURLAfterRegister =
@@ -51,12 +52,7 @@ test("check checout and some button", async ({ context, page }) => {
   await expect(page).toHaveURL(expectedLoginURL);
 
   // login by user name and password
-  await (
-    await loginObject.fillUsernameAndPassword(
-      "rana.mohamed8790@gmail.com",
-      "Pass@1234",
-    )
-  ).clickOnLoginButton();
+  await loginObject.logintoHomePage(uniqueEmail, password);
 
   // user redirect to Home Page after login
   await page.screenshot({ path: "after-Logged-in.png" });
@@ -79,7 +75,6 @@ test("check checout and some button", async ({ context, page }) => {
 
   // add product to cart
   await HomeObject.addProductInCart("ZARA COAT 3");
-  await page.waitForTimeout(1000);
   await page.screenshot({ path: "added-product.png" });
 
   // check the cart has number of added product

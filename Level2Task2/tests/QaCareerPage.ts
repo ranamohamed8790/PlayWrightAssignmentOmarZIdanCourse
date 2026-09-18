@@ -1,7 +1,7 @@
 import { type Page, type BrowserContext, Locator } from "@playwright/test";
-import { UtilityTool } from "./UtilityTool";
+import { HomeDashboard } from "./HomeDashboard";
 
-export class QaCareerPage extends UtilityTool {
+export class QaCareerPage extends HomeDashboard {
   protected readonly context;
   // Constructor
   constructor(page: Page, context: BrowserContext) {
@@ -10,7 +10,7 @@ export class QaCareerPage extends UtilityTool {
   }
 
   //Methods
-
+  // click on flashBlanner
   async clickOnFlashBannerAndOpenNewTab(): Promise<Page> {
     const [openNewTab] = await Promise.all([
       this.context.waitForEvent("page"),
@@ -18,7 +18,7 @@ export class QaCareerPage extends UtilityTool {
     ]);
     return openNewTab;
   }
-
+  // get blinking test locator
   get blinkingTextLocator(): Locator {
     return this.blinkingText;
   }

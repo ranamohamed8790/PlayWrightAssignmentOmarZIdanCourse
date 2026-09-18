@@ -9,7 +9,7 @@ export class BasePage {
   constructor(page: Page) {
     this.page = page;
   }
-
+  // get page
   get accessPage() {
     return this.page;
   }
