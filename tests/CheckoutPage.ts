@@ -32,11 +32,14 @@ export class CheckoutPage extends BasePage {
     .locator("div.title")
     .locator("input");
 
-  protected readonly selectCountryLocator: Locator =
-    this.accessPage.getByPlaceholder("Select Country");
-
   protected readonly placeOrderLocator: Locator =
     this.accessPage.getByPlaceholder("Place Order ");
+
+  protected readonly countryLocator: Locator =
+    this.accessPage.getByPlaceholder("Select Country");
+
+  protected readonly selectionCountryLocator: Locator =
+    this.accessPage.locator("button.ta-item");
 
   //Methods
   // Enter card number
@@ -57,6 +60,20 @@ export class CheckoutPage extends BasePage {
   async enterCardName(cardName: string): Promise<CheckoutPage> {
     await this.cardNameLoactor.click();
     await this.cardNameLoactor.fill(cardName);
+    return this;
+  }
+  // enter select country
+  async selectcountry(
+    partialName: string,
+    countryFullName: string,
+  ): Promise<CheckoutPage> {
+    await this.countryLocator.click();
+    await this.countryLocator.pressSequentially(partialName, {
+      delay: 100,
+    });
+    await this.selectionCountryLocator
+      .filter({ hasText: countryFullName })
+      .click();
     return this;
   }
 }

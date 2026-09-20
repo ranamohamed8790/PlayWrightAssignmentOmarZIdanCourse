@@ -5,9 +5,9 @@ import { LoginPage } from "./LoginPage";
 import { CheckoutPage } from "./CheckoutPage";
 import { QaCareerPage } from "./QaCareerPage";
 
-test.use({
-  launchOptions: { slowMo: 500 },
-});
+// test.use({
+//   launchOptions: { slowMo: 500 },
+// });
 
 test("check checout and some button", async ({ context, page }) => {
   const uniqueEmail: string = `rana${Date.now()}@test.com`;
@@ -96,9 +96,11 @@ test("check checout and some button", async ({ context, page }) => {
 
   await (
     await (
-      await checkoutObject.enterCardNumber("12345678999999")
-    ).enterCVV("1234")
-  ).enterCardName("Rana Ahmed");
+      await (
+        await checkoutObject.enterCardNumber("12345678999999")
+      ).enterCVV("1234")
+    ).enterCardName("Rana Ahmed")
+  ).selectcountry("egy", "Egypt");
 
   await page.screenshot({ path: "filling-checkout.png" });
 });
