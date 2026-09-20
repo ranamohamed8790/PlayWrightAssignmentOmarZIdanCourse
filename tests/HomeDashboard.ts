@@ -28,7 +28,7 @@ export class HomeDashboard extends BasePage {
     'button[routerlink="/dashboard/cart"]',
   );
   public readonly cartNumber: Locator = this.accessPage.getByRole("button", {
-    name: "Cart",
+    name: /Cart/,
   });
 
   // this button at Summary Page before payment

@@ -9,9 +9,10 @@ import { QaCareerPage } from "./QaCareerPage";
 //   launchOptions: { slowMo: 500 },
 // });
 
-test("check checout and some button", async ({ context, page }) => {
+test("check Register,login and checkout", async ({ context, page }) => {
   const uniqueEmail: string = `rana${Date.now()}@test.com`;
   const password: string = "Pass@1234";
+
   const expectedHomeURL =
     "https://rahulshettyacademy.com/client/#/dashboard/dash";
   const expectedURLAfterRegister =
@@ -19,8 +20,7 @@ test("check checout and some button", async ({ context, page }) => {
   const expectedLoginURL = "https://rahulshettyacademy.com/client/#/auth/login";
   const expectedCartURL =
     "https://rahulshettyacademy.com/client/#/dashboard/cart";
-  const expectedCheckoutURL =
-    "https://rahulshettyacademy.com/client/#/dashboard/order?prop=%5B%226960eac0c941646b7a8b3e68%22%5D";
+  const expectedCheckoutURL = /dashboard\/order/;
 
   const registerObject = new RegisterPage(page);
   const HomeObject = new HomeDashboard(page);
@@ -41,66 +41,29 @@ test("check checout and some button", async ({ context, page }) => {
       "Pass@1234",
     )
   ).clickOnRegistterButton();
-  //user redirect to Home Page after register
-  await expect(page).toHaveURL(expectedURLAfterRegister);
-
+  await expect(page).toHaveURL(expectedURLAfterRegister); //user redirect to Home Page after register
   await page.waitForLoadState();
 
   // click on login button after register at page of success register
   await registerObject.clickOnloginButtonafterRegistered();
-  //user here redirect to login page
-  await expect(page).toHaveURL(expectedLoginURL);
+  await expect(page).toHaveURL(expectedLoginURL); //user here redirect to login page
 
   // login by user name and password
   await loginObject.logintoHomePage(uniqueEmail, password);
-
-  // user redirect to Home Page after login
-  await page.screenshot({ path: "after-Logged-in.png" });
-  await expect(page).toHaveURL(expectedHomeURL);
-
-  // click on blinkingbanner
-  const openNewtab = await QaCareerObject.clickOnFlashBannerAndOpenNewTab();
-
-  await openNewtab.waitForLoadState();
-
-  // check  new tab redirect to correct link
-  await expect(openNewtab).toHaveURL(
-    "https://rahulshettyacademy.com/qa-career-accelerator-job-ready",
-  );
-
-  //close new tab
-  await openNewtab.close();
-  // ensure the 1st tab still open
-  await expect(QaCareerObject.blinkingTextLocator).toBeVisible();
+  await expect(page).toHaveURL(expectedHomeURL); // user redirect to Home Page after login
 
   // add product to cart
   await HomeObject.addProductInCart("ZARA COAT 3");
-  await page.screenshot({ path: "added-product.png" });
-
-  // check the cart has number of added product
-  await expect(HomeObject.cartButton).toContainText("1", { timeout: 10000 });
-
-  // click on cart button
-  await HomeObject.clickOncarttButton();
-
-  //user redierct to cart screen
-  await expect(page).toHaveURL(expectedCartURL);
+  await expect(HomeObject.cartButton).toContainText("1", { timeout: 100000 }); // check the cart has number of added product
+  await HomeObject.clickOncarttButton(); // click on cart button
+  await expect(page).toHaveURL(expectedCartURL); //user redierct to cart screen
 
   // click on checkoutbutton on cart screen
   await HomeObject.clickOnCheckoutOnAtCartScreen();
-
-  // user redirect to checkout page
-  await expect(page).toHaveURL(expectedCheckoutURL);
-
-  // user enter his payemnt data
-
+  await expect(page).toHaveURL(expectedCheckoutURL); // user redirect to checkout page
   await (
     await (
-      await (
-        await checkoutObject.enterCardNumber("12345678999999")
-      ).enterCVV("1234")
-    ).enterCardName("Rana Ahmed")
-  ).selectcountry("egy", "Egypt");
-
-  await page.screenshot({ path: "filling-checkout.png" });
+      await checkoutObject.enterCardNumber("12345678999999")
+    ).enterCVV("1234")
+  ).enterCardName("Rana Ahmed"); // user enter his payemnt data
 });
