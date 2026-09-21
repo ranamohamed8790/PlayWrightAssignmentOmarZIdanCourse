@@ -63,7 +63,9 @@ test("check Register,login and checkout", async ({ context, page }) => {
   await expect(page).toHaveURL(expectedCheckoutURL); // user redirect to checkout page
   await (
     await (
-      await checkoutObject.enterCardNumber("12345678999999")
-    ).enterCVV("1234")
-  ).enterCardName("Rana Ahmed"); // user enter his payemnt data
+      await (
+        await checkoutObject.enterCardNumber("12345678999999")
+      ).enterCVV("1234")
+    ).enterCardName("Rana Ahmed")
+  ).selectcountry("egy", "Egypt"); // user enter his payemnt data
 });
