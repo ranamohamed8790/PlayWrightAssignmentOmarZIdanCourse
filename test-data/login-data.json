@@ -1,0 +1,37 @@
+[
+  {
+    "testCaseTitle": "Enter correct username and password",
+    "userEmail": "rana.mohamed8790@gmail.com",
+    "userPassword": "Pass@1234",
+    "expectedMessage": ["Login Sucessfully"],
+    "expectedResult": "valid",
+    "productName": {
+      "productName1": "ZARA COAT 3",
+      "productName2": "ADIDAS ORIGINAL",
+      "productName3": "iphone 13 pro"
+    },
+    "cardNumber": "12345678999999",
+    "cvv": "1234",
+    "cardName": "Rana Ahmed",
+    "userNameShipper": "Ahmed",
+    "orderID": "6ac765e52be7a4bc2b943dd8"
+  },
+
+  {
+    "testCaseTitle": "Enter correct username and wrong password",
+    "userEmail": "rana.mohamed8790@gmail.com",
+    "userPassword": "123@pss",
+    "status": 400,
+    "expectedMessage": ["Incorrect email or password"],
+    "expectedResult": "inValid"
+  },
+
+  {
+    "testCaseTitle": "Enter wrong username and correct password",
+    "userEmail": "rana@gmail.com",
+    "userPassword": "123@pass",
+    "status": 400,
+    "expectedMessage": ["Incorrect email or password"],
+    "expectedResult": "inValid"
+  }
+]
