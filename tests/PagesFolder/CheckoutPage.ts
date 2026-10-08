@@ -1,4 +1,4 @@
-import { type Page, type Locator } from "@playwright/test";
+import { type Page, type Locator, expect } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class CheckoutPage extends BasePage {
@@ -32,8 +32,10 @@ export class CheckoutPage extends BasePage {
     .locator("div.title")
     .locator("input");
 
-  protected readonly placeOrderLocator: Locator =
-    this.accessPage.getByPlaceholder("Place Order ");
+  protected readonly placeOrderLocator: Locator = this.accessPage.locator(
+    "a.action__submit",
+    { hasText: "Place Order" },
+  );
 
   protected readonly countryLocator: Locator =
     this.accessPage.getByPlaceholder("Select Country");
@@ -75,5 +77,15 @@ export class CheckoutPage extends BasePage {
       .filter({ hasText: countryFullName })
       .click();
     return this;
+  }
+  //click on place order button
+
+  async clickOnPlaceOrderButton() {
+    await this.placeOrderLocator.click();
+  }
+
+  //thanks
+  async checkConfirmScreen(): Promise<void> {
+    await expect(this.accessPage).toHaveURL(/dashboard\/thanks/);
   }
 }

@@ -1,5 +1,6 @@
 import { type Page, type Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { paths } from "../../config/paths";
 
 export class HomeDashboard extends BasePage {
   // Constructor
@@ -9,11 +10,6 @@ export class HomeDashboard extends BasePage {
   //Locator of Home Page
 
   protected readonly cardLocator: Locator = this.accessPage.locator("div.card");
-
-  protected readonly signOutButton: Locator = this.accessPage.getByRole(
-    "button",
-    { name: " Sign Out " },
-  );
 
   protected readonly addToCartButton: Locator = this.accessPage.getByRole(
     "button",
@@ -36,25 +32,23 @@ export class HomeDashboard extends BasePage {
   );
 
   //Methods
-  async addProductInCart(productName: string): Promise<HomeDashboard> {
-    await this.cardLocator
-      .filter({ hasText: productName })
-      .getByRole("button", { name: " Add To Cart" })
-      .click();
+
+  async openDashboard(): Promise<void> {
+    await this.accessPage.goto(paths.home);
+  }
+  private productCard(productName: string): Locator {
+    return this.cardLocator.filter({ hasText: productName });
+  }
+
+  async addProducttoCart(productName: string): Promise<HomeDashboard> {
+    const card = this.productCard(productName);
+    await card.getByRole("button", { name: /Add To Cart/i }).click();
     return this;
   }
 
-  async clickOncarttButton(): Promise<HomeDashboard> {
+  async openCartScreen(): Promise<HomeDashboard> {
     await this.cartButton.click();
     return this;
   }
-
-  async clickOnCheckoutOnAtCartScreen(): Promise<HomeDashboard> {
-    await this.checkoutButton.click();
-    return this;
-  }
-
-  getCardLocator(): Locator {
-    return this.cardLocator;
-  }
 }
+
